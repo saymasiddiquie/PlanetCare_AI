@@ -3,39 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlantCare AI - Disease Detection</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>PlantCare AI | Neural Crop Protection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f4f9f4; font-family: 'Segoe UI', sans-serif; }
-        .hero { background: #2d5a27; color: white; padding: 60px 0; border-bottom: 5px solid #a8e063; }
-        .upload-card { border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: -30px; background: white; }
-        .btn-predict { background: #2d5a27; color: white; border-radius: 25px; padding: 10px 30px; }
-        .btn-predict:hover { background: #1e3d1a; color: white; }
+        :root {
+            --forest-green: #1B3022;
+            --leaf-green: #4CAF50;
+            --soil-tan: #f4f1ea;
+        }
+        body {
+            background-color: var(--soil-tan);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Large Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), 
+                        url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1800&q=90');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            border-bottom: 12px solid var(--leaf-green);
+        }
+
+        .display-text {
+            font-size: 4.5rem; /* Massive Headline */
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.8rem; /* Large Subtitle */
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        /* Diagnostic Portal Card */
+        .upload-container {
+            margin-top: -140px;
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .portal-title {
+            font-size: 2.8rem; /* Big Card Title */
+            color: var(--forest-green);
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 4px dashed #e0e0e0;
+            border-radius: 25px;
+            padding: 80px 40px;
+            background: #fafafa;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+        .drop-zone h4 {
+            font-size: 2rem; /* Big Upload Text */
+            margin-top: 20px;
+        }
+
+        .btn-scan {
+            background: var(--forest-green);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 1.6rem; /* Big Button Text */
+            width: 100%;
+            margin-top: 40px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-scan:hover {
+            background: var(--leaf-green);
+            transform: scale(1.02);
+        }
+
+        .info-footer {
+            margin-top: 50px;
+            font-size: 1.3rem; /* Scaled up footer text */
+            font-weight: 600;
+            color: var(--forest-green);
+        }
     </style>
 </head>
 <body>
 
-<div class="hero text-center">
-    <h1>🌿 PlantCare AI</h1>
-    <p>Upload a photo of a plant leaf to detect diseases instantly.</p>
+<nav class="navbar navbar-light py-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold" style="color: var(--forest-green); font-size: 2rem;" href="#">
+        🌿 PLANTCARE AI
+    </a>
+  </div>
+</nav>
+
+<div class="hero">
+    <div class="container">
+        <h1 class="display-text">Healthier Crops,<br>Instant Detection.</h1>
+        <p>Advanced Neural Diagnostics for 38 Plant Species</p>
+    </div>
 </div>
 
-<div class="container">
+<div class="container mb-5 pb-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card upload-card p-4 text-center">
+        <div class="col-lg-8">
+            <div class="upload-container">
+                <div class="text-center mb-5">
+                    <h2 class="portal-title">Diagnostic Portal</h2>
+                    <p class="fs-4 text-muted">Upload a clear specimen image for clinical analysis.</p>
+                </div>
+
                 <form action="/predict" method="post" enctype="multipart/form-data">
-                    <div class="mb-4">
-                        <label for="file" class="form-label fw-bold">Select Leaf Image</label>
-                        <input class="form-control" type="file" name="file" id="file" required>
+                    <div class="drop-zone text-center" onclick="document.getElementById('fileInput').click();">
+                        <img src="https://img.icons8.com/fluency/120/leaf.png" alt="leaf icon">
+                        <h4 id="file-label" class="text-muted">Select Leaf Specimen</h4>
+                        <input type="file" name="file" id="fileInput" hidden onchange="showName()">
                     </div>
-                    <button type="submit" class="btn btn-predict shadow-sm">Analyze Leaf</button>
+                    <button type="submit" class="btn btn-scan">Run AI Diagnosis</button>
                 </form>
+
+                <div class="info-footer text-center">
+                    <div class="row">
+                        <div class="col-4 border-end">🧪 Lab-Grade</div>
+                        <div class="col-4 border-end">📡 Real-Time</div>
+                        <div class="col-4">🌍 Global Scale</div>
+                    </div>
+                </div>
             </div>
-            <p class="text-muted text-center mt-4 small">Trained on 87,000+ images for 38 disease classes.</p>
         </div>
     </div>
 </div>
 
+<script>
+    function showName() {
+        const input = document.getElementById('fileInput');
+        const label = document.getElementById('file-label');
+        if (input.files.length > 0) {
+            label.innerText = "Target: " + input.files[0].name;
+            label.style.color = "#4CAF50";
+        }
+    }
+</script>
 </body>
 </html>
